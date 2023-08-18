@@ -17,3 +17,34 @@
  */
 
 
+
+class Column_Management {
+
+  function __construct(){
+    add_action( 'plugin_loaded', array($this, 'clm_text_domain') );
+    add_filter( 'manage_posts_columns', array($this, 'clm_manage_post_col') );
+    add_action( 'manage_posts_custom_column', array($this, 'clm_manage_post_custom_col'), 10, 2 );
+  }
+
+  function clm_text_domain() {
+    load_plugin_textdomain( 'column-management', false, plugin_dir_url( __FILE__ ) . '/languages' );
+  }
+
+  // Added new Column in all post
+  function clm_manage_post_col($columns) {
+    $columns['id'] = __( 'Post ID', 'column-management' );
+    return $columns;
+  }
+
+  // Show post ID in custom cols
+  function clm_manage_post_custom_col($column, $post_id) {
+    echo $post_id;
+  }
+
+
+
+
+
+}
+
+new Column_Management();
